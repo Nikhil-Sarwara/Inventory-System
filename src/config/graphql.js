@@ -1,6 +1,6 @@
-const { ApolloServer } = require("apollo-server-express");
-const typeDefs = require("../schema/typeDefs");
-const productResolver = require("../resolvers/productResolver"); // Import resolver here
+import { ApolloServer } from "apollo-server-express";
+import typeDefs from "../schema/typeDefs.js";
+import productResolver from "../resolvers/productResolver.js"; // Import resolver here
 
 const server = new ApolloServer({
   typeDefs,
@@ -10,4 +10,4 @@ const server = new ApolloServer({
   },
 });
 
-module.exports = server;
+export default server;

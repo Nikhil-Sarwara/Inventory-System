@@ -1,4 +1,4 @@
-const Product = require("../models/Product");
+import Product from "../models/Product.js";
 
 const productResolver = {
   Query: {
@@ -30,4 +30,4 @@ const productResolver = {
   },
 };
 
-module.exports = productResolver;
+export default productResolver;

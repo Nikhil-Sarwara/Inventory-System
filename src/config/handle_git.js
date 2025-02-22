@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+import { existsSync, readFileSync, writeFileSync } from "fs";
+import { resolve, join } from "path";
 
 /**
  * Creates or updates a .gitignore file if it does not already exist in the current directory or parent directory,
@@ -8,9 +8,9 @@ const path = require("path");
  */
 function createGitignoreIfNotExists() {
   const currentDir = process.cwd();
-  const parentDir = path.resolve(currentDir, "..");
-  const currentGitignore = path.join(currentDir, ".gitignore");
-  const parentGitignore = path.join(parentDir, ".gitignore");
+  const parentDir = resolve(currentDir, "..");
+  const currentGitignore = join(currentDir, ".gitignore");
+  const parentGitignore = join(parentDir, ".gitignore");
 
   const gitignoreContent = `
 # ignore node_modules folder
@@ -23,15 +23,15 @@ function createGitignoreIfNotExists() {
 `.trim();
 
   const doesGitignoreNeedUpdate = (filePath) => {
-    if (!fs.existsSync(filePath)) {
+    if (!existsSync(filePath)) {
       return true;
     }
-    const existingContent = fs.readFileSync(filePath, "utf8");
+    const existingContent = readFileSync(filePath, "utf8");
     return !existingContent.includes(gitignoreContent);
   };
 
   const updateGitignore = (filePath) => {
-    fs.writeFileSync(filePath, gitignoreContent);
+    writeFileSync(filePath, gitignoreContent);
   };
 
   if (doesGitignoreNeedUpdate(currentGitignore)) {
@@ -41,4 +41,4 @@ function createGitignoreIfNotExists() {
   }
 }
 
-module.exports = { createGitignoreIfNotExists };
+export default { createGitignoreIfNotExists };

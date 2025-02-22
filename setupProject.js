@@ -1,13 +1,13 @@
-const fs = require("fs");
-const path = require("path");
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { dirname } from "path";
 
 const createFile = (filePath, content) => {
-  const dir = path.dirname(filePath);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  const dir = dirname(filePath);
+  if (!existsSync(dir)) {
+    mkdirSync(dir, { recursive: true });
   }
 
-  fs.writeFileSync(filePath, content, "utf8");
+  writeFileSync(filePath, content, "utf8");
   console.log(`Created: ${filePath}`);
 };
 

@@ -17,7 +17,20 @@ const runCommand = (command) => {
 // Ask the user for the branch name and commit message
 const askQuestions = async () => {
   const answers = await inquirer.prompt([
-    // Correct usage of prompt
+    {
+      type: "confirm",
+      name: "useGitAutomation",
+      message: "Do you want to run the git automation?",
+      default: true,
+    },
+  ]);
+
+  if (!answers.useGitAutomation) {
+    console.log("Exiting...");
+    process.exit(0);
+  }
+
+  const questions = [
     {
       type: "confirm",
       name: "createBranch",
@@ -50,8 +63,23 @@ const askQuestions = async () => {
         "Are you sure you want to push this branch to the remote repository?",
       default: true,
     },
-  ]);
-  return answers;
+  ];
+
+  const {
+    createBranch,
+    branchName,
+    commitMessage,
+    confirmCommit,
+    confirmPush,
+  } = await inquirer.prompt(questions);
+
+  return {
+    createBranch,
+    branchName,
+    commitMessage,
+    confirmCommit,
+    confirmPush,
+  };
 };
 
 // Create a new branch, add changes, commit, and push to the remote
@@ -97,5 +125,5 @@ const gitAutomation = async () => {
   }
 };
 
-// Run the automation
-gitAutomation();
+// Export the gitAutomation function
+export { gitAutomation };
