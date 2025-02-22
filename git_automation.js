@@ -37,6 +37,19 @@ const askQuestions = async () => {
       message: "Enter the commit message:",
       default: "Initial commit for new feature",
     },
+    {
+      type: "confirm",
+      name: "confirmCommit",
+      message: "Are you sure you want to commit these changes?",
+      default: true,
+    },
+    {
+      type: "confirm",
+      name: "confirmPush",
+      message:
+        "Are you sure you want to push this branch to the remote repository?",
+      default: true,
+    },
   ]);
   return answers;
 };
@@ -44,27 +57,41 @@ const askQuestions = async () => {
 // Create a new branch, add changes, commit, and push to the remote
 const gitAutomation = async () => {
   try {
-    const { createBranch, branchName, commitMessage } = await askQuestions();
+    const {
+      createBranch,
+      branchName,
+      commitMessage,
+      confirmCommit,
+      confirmPush,
+    } = await askQuestions();
 
+    // Create a new branch if requested
     if (createBranch) {
-      // Create a new branch and switch to it
       console.log(`Creating and switching to branch ${branchName}...`);
       await runCommand(`git checkout -b ${branchName}`);
     }
 
-    // Add all changes
+    // Add all changes automatically
     console.log("Adding all changes...");
     await runCommand("git add .");
 
-    // Commit the changes
-    console.log(`Committing changes with message: ${commitMessage}...`);
-    await runCommand(`git commit -m "${commitMessage}"`);
+    // Ask for commit confirmation
+    if (confirmCommit) {
+      console.log(`Committing changes with message: ${commitMessage}...`);
+      await runCommand(`git commit -m "${commitMessage}"`);
+    } else {
+      console.log("Commit cancelled.");
+      return; // Exit if commit is cancelled
+    }
 
-    // Push the branch to the remote repository
-    console.log("Pushing the branch to the remote repository...");
-    await runCommand(`git push origin ${branchName || "main"}`); // Push to 'main' if no new branch created
-
-    console.log(`Changes committed and pushed successfully!`);
+    // Ask for push confirmation
+    if (confirmPush) {
+      console.log("Pushing the branch to the remote repository...");
+      await runCommand(`git push origin ${branchName || "main"}`); // Push to 'main' if no new branch created
+      console.log("Changes pushed successfully!");
+    } else {
+      console.log("Push cancelled.");
+    }
   } catch (error) {
     console.error("Error in git operations:", error);
   }
