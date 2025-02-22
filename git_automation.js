@@ -27,7 +27,7 @@ const askQuestions = async () => {
 
   if (!answers.useGitAutomation) {
     console.log("Exiting...");
-    process.exit(0);
+    return; // Exit if user does not want to run the git automation
   }
 
   const questions = [
@@ -92,6 +92,8 @@ const gitAutomation = async () => {
       confirmCommit,
       confirmPush,
     } = await askQuestions();
+
+    if (!createBranch && !confirmCommit && !confirmPush) return; // Exit if user does not want to run the git automation
 
     // Create a new branch if requested
     if (createBranch) {
