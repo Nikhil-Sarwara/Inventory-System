@@ -14,7 +14,7 @@ app.use("/api", productRoutes);
 
 const startServer = async () => {
   // ask the user if they want to run the git automation
-  await gitAutomation();
+  // await gitAutomation();
 
   // Connect to MongoDB
   await connectDB();

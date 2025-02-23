@@ -128,4 +128,6 @@ const gitAutomation = async () => {
 };
 
 // Export the gitAutomation function
-export { gitAutomation };
+// export { gitAutomation };
+
+gitAutomation();
