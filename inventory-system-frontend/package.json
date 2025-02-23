@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.1",
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@vue/apollo-composable": "^4.2.1",
     "apollo-boost": "^0.4.9",
     "bootstrap": "^5.3.3",
     "core-js": "^3.8.3",
+    "font-awesome": "^4.7.0",
     "graphql": "^15.0.0",
     "vue": "^3.2.13",
     "vue-apollo": "^3.1.2",

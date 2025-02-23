@@ -3,7 +3,8 @@ import { config } from "dotenv";
 import connectDB from "./config/db.js";
 import server from "./config/graphql.js"; // Import the GraphQL server config
 import productRoutes from "./routes/productRoutes.js";
-import { gitAutomation } from "../git_automation.js";
+import cors from "cors";
+// import { gitAutomation } from "../git_automation.js";
 
 config();
 
@@ -18,6 +19,14 @@ const startServer = async () => {
 
   // Connect to MongoDB
   await connectDB();
+
+  app.use(
+    cors({
+      origin: "*", // Allow all origins (not recommended for production)
+      methods: "GET, POST, PUT, DELETE, OPTIONS",
+      allowedHeaders: "Content-Type, Authorization",
+    })
+  );
 
   // Wait for the Apollo Server to start
   await server.start();

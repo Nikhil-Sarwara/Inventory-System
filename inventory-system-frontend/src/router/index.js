@@ -1,22 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
-import InventoryList from "../components/InventoryList.vue";
-import InventoryForm from "../components/InventoryForm.vue";
+import Home from "../components/HomePage.vue";
+import Auth from "../components/AuthPage.vue";
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: InventoryList,
-  },
-  {
-    path: "/add",
-    name: "Add Inventory",
-    component: InventoryForm,
-  },
+  { path: "/", component: Home },
+  { path: "/auth", component: Auth },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 

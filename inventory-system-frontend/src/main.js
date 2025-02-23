@@ -1,27 +1,17 @@
-// // src/main.js
-// import { createApp } from "vue";
-// import App from "./App.vue";
-// import { createApolloProvider } from "@vue/apollo-option";
-// import apolloClient from "./apollo"; // Import apollo.js
-// import router from "./router";
-
-// import "bootstrap/dist/css/bootstrap.min.css";
-
-// const apolloProvider = createApolloProvider({
-//   defaultClient: apolloClient,
-// });
-
-// createApp(App)
-//   .use(apolloProvider) // Register ApolloProvider
-//   .use(router)
-//   .mount("#app");
-
-import { createApp } from "vue";
+import { createApp, provide, h } from "vue";
+import { DefaultApolloClient } from "@vue/apollo-composable";
 import App from "./App.vue";
-import router from "./router"; // Import router
-
+import router from "./router";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
+import apolloClient from "./apollo"; // Import Apollo Client
 
-const app = createApp(App);
-app.use(router); // Use router
+const app = createApp({
+  setup() {
+    provide(DefaultApolloClient, apolloClient);
+  },
+  render: () => h(App),
+});
+app.use(router);
 app.mount("#app");
